@@ -1,0 +1,24 @@
+namespace:
+  istio: istio-system
+  project: pope
+
+redis:
+  replicas: 1
+
+  image:
+    repository: library/redis
+    tags: 5.0-alpine
+
+  resources:
+    limits:
+      cpu: 500m
+      memory: 1Gi
+
+  storage: 20Gi
+
+  service:
+    type: ClusterIP
+    ports:
+      - name: redis
+        port: 6479
+        targetPort: 6379

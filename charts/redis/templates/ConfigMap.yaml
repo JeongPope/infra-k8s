@@ -1,0 +1,17 @@
+# https://developpaper.com/deploying-single-node-redis-in-kubernetes-environment/
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: redis
+  namespace: {{ .Values.namespace.project }}
+  labels:
+    app: redis
+data:
+  redis.conf: |-
+    dir /data
+    port 6379
+    bind 0.0.0.0
+    appendonly yes
+    protected-mode no
+    pidfile /data/redis-6379.pid
