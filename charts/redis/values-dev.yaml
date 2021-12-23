@@ -1,6 +1,6 @@
 namespace:
   istio: istio-system
-  project: pope
+  project: project
 
 redis:
   replicas: 1
