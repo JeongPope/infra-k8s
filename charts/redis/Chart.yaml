@@ -1,4 +1,0 @@
-apiVersion: v1
-description: Redis managed by helm
-name: Redis
-version: 1.0.0
