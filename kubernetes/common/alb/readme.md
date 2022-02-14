@@ -46,6 +46,11 @@ $ kubectl apply -f ingress.yaml
 $ kubectl get ingress aws-alb-ingress -n istio-system -o jsonpath="{.status.loadBalancer.ingress[*].hostname}"
 ```
 
+* 일정 시간이 지났음에도 ALB가 생성되지 않는다면, ALB Controller Pod의 로그를 확인한다.
+* 로그 필드 중, `"level":"error"`가 발생한다면 다음을 확인한다.
+* https://aws.amazon.com/ko/premiumsupport/knowledge-center/eks-load-balancer-controller-subnets/
+<br>
+
 ### Reference
 * [ALB Ingress Controller : Official](https://kubernetes-sigs.github.io/aws-load-balancer-controller/v2.3/deploy/installation/)
 * [ALB Ingress Controller : Ingress annotations](https://kubernetes-sigs.github.io/aws-load-balancer-controller/v1.1/guide/ingress/annotation/#subnets)
