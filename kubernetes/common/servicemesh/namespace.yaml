@@ -4,3 +4,4 @@ metadata:
   name: project
   labels:
     istio-injection: enabled
+    # goldilocks.fairwinds.com/enabled: "true"
