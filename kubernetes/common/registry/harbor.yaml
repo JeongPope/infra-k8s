@@ -1,0 +1,6 @@
+## Case 1. Harbor
+## $ kubectl create secret docker-registry {{ resource_name }} \
+##   -n {{ namespace }}
+##   --docker-server={{ harbor.server }} \
+##   --docker-username={{ harbor.username }} \
+##   --docker-password={{ harbor.password }} --dry-run=client -o yaml > harbor.yaml
