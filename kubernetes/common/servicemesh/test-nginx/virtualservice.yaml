@@ -5,7 +5,7 @@ metadata:
   namespace: project
 spec:
   hosts:
-    - "*" # change your domain
+    - dev.popehub.net # change your domain
   gateways:
     - istio-gateway
   http:
