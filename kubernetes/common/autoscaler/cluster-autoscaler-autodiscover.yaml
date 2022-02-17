@@ -6,7 +6,7 @@ metadata:
     k8s-addon: cluster-autoscaler.addons.k8s.io
     k8s-app: cluster-autoscaler
   # annotations:
-  #   eks.amazonaws.com/role-arn: arn:aws:iam::984662332756:role/k8s-project-dev-asg-role
+  #   eks.amazonaws.com/role-arn: arn:aws:iam::{{account id}}:role/{{iam role name}}
   name: cluster-autoscaler
   namespace: kube-system
 
@@ -168,7 +168,7 @@ spec:
             - --cloud-provider=aws
             - --skip-nodes-with-local-storage=false
             - --expander=least-waste
-            - --node-group-auto-discovery=asg:tag=k8s.io/cluster-autoscaler/enabled,k8s.io/cluster-autoscaler/k8s-project-dev
+            - --node-group-auto-discovery=asg:tag=k8s.io/cluster-autoscaler/enabled,k8s.io/cluster-autoscaler/{{ cluster name }}
             - --balance-similar-node-groups
             - --skip-nodes-with-system-pods=false
           volumeMounts:
