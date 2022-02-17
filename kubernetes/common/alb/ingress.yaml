@@ -9,6 +9,7 @@ metadata:
     # 인터넷 연결 Application Load Balancer 생성
     kubernetes.io/ingress.class: alb
     alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/group.name: alb-01
     # 80, 443 포트에 대한 리스너 생성
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTP":80}, {"HTTPS":443}]'
     # ACM 인증서 ARN을 ALB의 443 포트 리스너와 연결
