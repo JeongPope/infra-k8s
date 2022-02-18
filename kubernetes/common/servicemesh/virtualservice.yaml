@@ -5,13 +5,13 @@ metadata:
   namespace: project
 spec:
   hosts:
-    - dev.popehub.net # change your domain
+    - { { your domain } } # change your domain
   gateways:
     - istio-gateway
   http:
     - match:
         - uri:
-            exact: /
+            prefix: /
       route:
         - destination:
             host: nginx-svc
