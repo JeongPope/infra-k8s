@@ -19,7 +19,7 @@ metadata:
     alb.ingress.kubernetes.io/ssl-redirect: "443"
 spec:
   rules:
-    - host: { { argocd domain } } # if you need, change your domain
+    - host: { { ArgoCD Domain } } # if you need, change your domain
       http:
         paths:
           - path: /
@@ -29,3 +29,31 @@ spec:
                 name: argocd-server
                 port:
                   number: 443
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: goldilocks-ingress
+  namespace: vpa
+  labels:
+    name: goldilocks-ingress
+  annotations:
+    kubernetes.io/ingress.class: alb
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/group.name: alb-02
+    alb.ingress.kubernetes.io/backend-protocol: HTTP
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP":80}, {"HTTPS":443}]'
+    alb.ingress.kubernetes.io/certificate-arn: { { ACM ARN } }
+    alb.ingress.kubernetes.io/ssl-redirect: "443"
+spec:
+  rules:
+    - host: { { goldilocks domain } } # if you need, change your domain
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: goldilocks-dashboard
+                port:
+                  number: 80

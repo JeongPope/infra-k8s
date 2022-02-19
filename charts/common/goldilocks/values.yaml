@@ -92,7 +92,7 @@ dashboard:
   replicaCount: 2
   service:
     # dashboard.service.type -- The type of the dashboard service
-    type: ClusterIP
+    type: NodePort
     # dashboard.service.port -- The port to run the dashboard service on
     port: 80
     # dashboard.service.annotations -- Extra annotations for the dashboard service
@@ -133,7 +133,8 @@ dashboard:
 
     # dashboard.ingress.ingressClassName -- From Kubernetes 1.18+ this field is supported in case your ingress controller supports it. When set, you do not need to add the ingress class as annotation.
     ingressClassName:
-    annotations: {}
+    annotations:
+      {}
       # kubernetes.io/ingress.class: nginx
       # kubernetes.io/tls-acme: "true"
     hosts:
