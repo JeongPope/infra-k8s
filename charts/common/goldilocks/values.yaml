@@ -89,7 +89,7 @@ dashboard:
   # dashboard.enabled -- If true, the dashboard component will be installed
   enabled: true
   # dashboard.replicaCount -- Number of dashboard pods to run
-  replicaCount: 2
+  replicaCount: 1
   service:
     # dashboard.service.type -- The type of the dashboard service
     type: NodePort
