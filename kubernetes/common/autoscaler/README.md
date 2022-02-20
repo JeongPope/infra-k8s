@@ -5,9 +5,10 @@
 ```bash
 $ kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
 ```
+<br>
 
 #### Autoscaler
-클러스터 node의 리소스 부족으로 파드의 스케쥴링이 pending되면, horizontal scaling을 한다.
+Cluster node의 리소스 부족으로 파드의 Scheduling이 pending되면, horizontal scaling을 한다.
 
 1. nodegroup asg의 maxsize를 적절히 수정한다
 * AWSCLI를 통한 확인 방법

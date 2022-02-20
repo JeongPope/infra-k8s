@@ -9,6 +9,7 @@ ECK Operator, CRD를 활용해 Elasticsearch, Kibana를 인프라에 구성한�
 ```bash
 $ k apply -f . // elasticsearch, kibana 동시에 설치
 ```
+<br>
 
 ### Elasticsearch
 Elasticsearch는 기본적으로 모든 데이터를 indexing하여 저장하고, 검색, 분석 등의 역할을 한다
@@ -47,6 +48,7 @@ spec:
                 limits:
                   memory: 3Gi
                   cpu: 1500m
+
       # AWS EBS를 Persistent volume으로 사용한다
       volumeClaimTemplates:
         - metadata:
@@ -58,6 +60,7 @@ spec:
             resources:
               requests:
                 storage: 50Gi
+
   # TLS 를 disabled 한다.
   http:
     tls:
@@ -96,8 +99,9 @@ spec:
       selfSignedCertificate:
         disabled: true
 ```
+<br>
 
-### Initial credential
+#### Initial credential
 최초 ID는 `elastic`이고, PW는 다음 명령어를 통해 확인할 수 있다.
 
 ```bash
