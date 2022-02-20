@@ -6,6 +6,14 @@ metadata:
   namespace: istio-system
 spec:
   profile: default
+  meshConfig:
+    # Datadog, Jaeger를 통해 분산 트레이싱을 가능하게 함
+    enableTracing: true
+    # Envoy proxy의 access log를 콘솔로 남긴다.
+    accessLogFile: "/dev/stdout"
+    # istio-proxy가 완전히 올라온 이후 서비스 실행
+    defaultConfig:
+      holdApplicationUntilProxyStarts: true
   components:
     ingressGateways:
       # 일반적인 트래픽을 받기 위한 ingress gateway
@@ -27,17 +35,29 @@ spec:
             type: NodePort
           serviceAnnotations:
             # ALB Health check 정보를 제공
+            alb.ingress.kubernetes.io/healthcheck-protocol: HTTP
             alb.ingress.kubernetes.io/healthcheck-path: /healthz/ready
-            alb.ingress.kubernetes.io/healthcheck-port: { { Your nodeport } }
+            alb.ingress.kubernetes.io/healthcheck-port: "YOUR NodePort"
             # How to get nodeport
             # kubectl get service istio-ingressgateway -n istio-system \
             #   -o jsonpath='{.spec.ports[?(@.name=="status-port")].nodePort}'
+      - name: devops-ingressgateway
+        enabled: true
+        label:
+          istio: devops-ingressgateway
+        k8s:
+          hpaSpec:
+            minReplicas: 1
+          resources:
+            limits:
+              cpu: 500m
+              memory: 1Gi
+            requests:
+              cpu: 500m
+              memory: 1Gi
+          service:
+            type: NodePort
+          serviceAnnotations:
             alb.ingress.kubernetes.io/healthcheck-protocol: HTTP
-  meshConfig:
-    # Datadog, Jaeger를 통해 분산 트레이싱을 가능하게 함
-    enableTracing: true
-    # Envoy proxy의 access log를 콘솔로 남긴다.
-    accessLogFile: "/dev/stdout"
-    # istio-proxy가 완전히 올라온 이후 서비스 실행
-    defaultConfig:
-      holdApplicationUntilProxyStarts: true
+            alb.ingress.kubernetes.io/healthcheck-path: /healthz/ready
+            alb.ingress.kubernetes.io/healthcheck-port: "YOUR NodePort"
