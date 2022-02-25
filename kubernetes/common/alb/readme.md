@@ -3,7 +3,7 @@
 ```bash
 $ curl -o iam-policy.json https://raw.githubusercontent.com/kubernetes-sigs/aws-load-balancer-controller/v2.3.1/docs/install/iam_policy.json
 ```
-* 공식 문서에 따라 `IAM`을 생성하지 않고, `Terraform`에서 생성
+* 공식 문서에 따라 `IAM`을 생성하지 않고, `Terraform`에서 생성한 Role을 사용할 수도 있다.
 * [Terraform : IAM Policy](https://github.com/JeongPope/infra-terraform/blob/master/workspace/3-iam/policy/worker-alb.json)
 <br>
 
@@ -40,8 +40,6 @@ $ kubectl apply -f aws-alb-controller.yaml
 
 ### 4. Create LoadBalancer
 ```bash
-$ kubectl apply -f ingress.yaml
-
 // 생성된 ALB 확인 방법
 $ kubectl get ingress aws-alb-ingress -n istio-system -o jsonpath="{.status.loadBalancer.ingress[*].hostname}"
 ```
