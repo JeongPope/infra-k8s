@@ -11,11 +11,11 @@ metadata:
     alb.ingress.kubernetes.io/group.name: alb-03
     alb.ingress.kubernetes.io/backend-protocol: HTTPS
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTP":80}, {"HTTPS":443}]'
-    alb.ingress.kubernetes.io/certificate-arn: { { AWS ACM ARN } }
+    alb.ingress.kubernetes.io/certificate-arn: "arn:aws:acm:ap-northeast-2:<aws_account_id>:certificate/<arn>"
     alb.ingress.kubernetes.io/ssl-redirect: "443"
 spec:
   rules:
-    - host: { { YOUR DOMAIN } } # if you need, change your domain
+    - host: <your host> # need to change
       http:
         paths:
           - path: /

@@ -1,19 +1,21 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: goldilocks-ingress
-  namespace: autoscale
+  name: alb-istio-ingressgateway
+  namespace: istio-system
   labels:
-    name: goldilocks-ingress
+    name: alb-istio-ingress-gateway
   annotations:
+    # 인터넷 연결 Application Load Balancer 생성
     kubernetes.io/ingress.class: alb
     alb.ingress.kubernetes.io/scheme: internet-facing
-    alb.ingress.kubernetes.io/group.name: alb-03
-    alb.ingress.kubernetes.io/backend-protocol: HTTP
+    alb.ingress.kubernetes.io/group.name: alb-01
+    # 80, 443 포트에 대한 리스너 생성
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTP":80}, {"HTTPS":443}]'
+    # ACM 인증서 ARN을 ALB의 443 포트 리스너와 연결
     alb.ingress.kubernetes.io/certificate-arn: "arn:aws:acm:ap-northeast-2:<aws_account_id>:certificate/<arn>"
+    # 모든 HTTP 리스너는 default action으로 HTTPS로 redirect되며, 다른 규칙을 무시한다.
     alb.ingress.kubernetes.io/ssl-redirect: "443"
-    alb.ingress.kubernetes.io/success-codes: 200,301
 spec:
   rules:
     - host: <your host> # need to change
@@ -23,6 +25,6 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: goldilocks-dashboard
+                name: istio-ingressgateway
                 port:
                   number: 80
