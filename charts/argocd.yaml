@@ -1,3 +1,17 @@
+redis-ha:
+  enabled: true
+
+controller:
+  enableStatefulSet: true
+
 server:
+  autoscaling:
+    enabled: true
+    minReplicas: 2
   service:
     type: ClusterIP
+
+repoServer:
+  autoscaling:
+    enabled: true
+    minReplicas: 2
