@@ -9,7 +9,7 @@ server:
     enabled: true
     minReplicas: 2
   service:
-    type: ClusterIP
+    type: NodePort
 
 repoServer:
   autoscaling:
