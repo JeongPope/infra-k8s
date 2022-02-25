@@ -26,7 +26,7 @@ $ helm install elastic-operator . -n {{ namespace }}
 $ kubectl logs -n {{ namespace }} sts/elastic-operator
 
 // Uninstall
-kubectl delete -n elastic-system \
+kubectl delete -n {{ namespace }} \
     serviceaccount/elastic-operator \
     secret/elastic-webhook-server-cert \
     clusterrole.rbac.authorization.k8s.io/elastic-operator \

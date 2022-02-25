@@ -14,7 +14,18 @@ metadata:
     alb.ingress.kubernetes.io/ssl-redirect: "443"
 spec:
   rules:
-    - http:
+    - host: <elasticsearch host> # need to change
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: devops-ingressgateway
+                port:
+                  number: 80
+    - host: <kibana host> # need to change
+      http:
         paths:
           - path: /
             pathType: Prefix
