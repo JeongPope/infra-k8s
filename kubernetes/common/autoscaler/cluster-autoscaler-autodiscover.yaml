@@ -5,14 +5,13 @@ metadata:
   labels:
     k8s-addon: cluster-autoscaler.addons.k8s.io
     k8s-app: cluster-autoscaler
-  # annotations:
-  #   eks.amazonaws.com/role-arn: arn:aws:iam::{{account id}}:role/{{iam role name}}
+  annotations:
+    # kubectl annotate serviceaccount cluster-autoscaler \
+    #   -n kube-system \
+    #   eks.amazonaws.com/role-arn=arn:aws:iam::<ACCOUNT_ID>:role/<AmazonEKSClusterAutoscalerRole>
+    eks.amazonaws.com/role-arn: arn:aws:iam::<aws_account_id>:role/<IAM Role for autoscale>
   name: cluster-autoscaler
   namespace: kube-system
-
-# kubectl annotate serviceaccount cluster-autoscaler \
-#   -n kube-system \
-#   eks.amazonaws.com/role-arn=arn:aws:iam::<ACCOUNT_ID>:role/<AmazonEKSClusterAutoscalerRole>
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
@@ -168,7 +167,7 @@ spec:
             - --cloud-provider=aws
             - --skip-nodes-with-local-storage=false
             - --expander=least-waste
-            - --node-group-auto-discovery=asg:tag=k8s.io/cluster-autoscaler/enabled,k8s.io/cluster-autoscaler/{{ cluster name }}
+            - --node-group-auto-discovery=asg:tag=k8s.io/cluster-autoscaler/enabled,k8s.io/cluster-autoscaler/k8s-boilerplate-dev
             - --balance-similar-node-groups
             - --skip-nodes-with-system-pods=false
           volumeMounts:
