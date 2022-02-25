@@ -85,14 +85,17 @@ controller:
     # controller.deployment.additionalLabels -- Extra labels for the controller deployment
     additionalLabels: {}
 
+    # controller.deployment.podAnnotations -- Extra annotations for the controller pod
+    podAnnotations: {}
+
 dashboard:
   # dashboard.enabled -- If true, the dashboard component will be installed
   enabled: true
   # dashboard.replicaCount -- Number of dashboard pods to run
-  replicaCount: 1
+  replicaCount: 2
   service:
     # dashboard.service.type -- The type of the dashboard service
-    type: NodePort
+    type: ClusterIP
     # dashboard.service.port -- The port to run the dashboard service on
     port: 80
     # dashboard.service.annotations -- Extra annotations for the dashboard service
@@ -133,8 +136,7 @@ dashboard:
 
     # dashboard.ingress.ingressClassName -- From Kubernetes 1.18+ this field is supported in case your ingress controller supports it. When set, you do not need to add the ingress class as annotation.
     ingressClassName:
-    annotations:
-      {}
+    annotations: {}
       # kubernetes.io/ingress.class: nginx
       # kubernetes.io/tls-acme: "true"
     hosts:

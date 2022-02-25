@@ -36,8 +36,7 @@ global:
   #   - git.myhostname
 
   # -- Additional labels to add to all resources
-  additionalLabels:
-    {}
+  additionalLabels: {}
     # app: argo-cd
 
   networkPolicy:
@@ -60,8 +59,7 @@ apiVersionOverrides:
 createAggregateRoles: false
 
 # -- Array of extra K8s manifests to deploy
-extraObjects:
-  []
+extraObjects: []
   # - apiVersion: secrets-store.csi.x-k8s.io/v1
   #   kind: SecretProviderClass
   #   metadata:
@@ -110,7 +108,7 @@ controller:
 
   # -- Deploy the application controller as a StatefulSet instead of a Deployment, this is required for HA capability.
   # This is a feature flag that will become the default in chart version 3.x
-  enableStatefulSet: true
+  enableStatefulSet: false
 
   ## Application controller commandline flags
   args:
@@ -271,8 +269,7 @@ controller:
       # -- Prometheus [MetricRelabelConfigs] to apply to samples before ingestion
       metricRelabelings: []
       # -- Prometheus ServiceMonitor selector
-      selector:
-        {}
+      selector: {}
         # prometheus: kube-prometheus
 
       # -- Prometheus ServiceMonitor namespace
@@ -384,8 +381,7 @@ dex:
       # -- Prometheus [MetricRelabelConfigs] to apply to samples before ingestion
       metricRelabelings: []
       # -- Prometheus ServiceMonitor selector
-      selector:
-        {}
+      selector: {}
         # prometheus: kube-prometheus
 
       # -- Prometheus ServiceMonitor namespace
@@ -526,7 +522,7 @@ dex:
     #     - all
     # readOnlyRootFilesystem: true
 
-  # -- Resource limits and requests for dex
+# -- Resource limits and requests for dex
   resources: {}
   #  limits:
   #    cpu: 50m
@@ -700,8 +696,7 @@ redis:
     # -- Port to use for redis-exporter sidecar
     containerPort: 9121
     # -- Resource limits and requests for redis-exporter sidecar
-    resources:
-      {}
+    resources: {}
       # limits:
       #   cpu: 50m
       #   memory: 64Mi
@@ -731,8 +726,7 @@ redis:
       # -- Prometheus [MetricRelabelConfigs] to apply to samples before ingestion
       metricRelabelings: []
       # -- Prometheus ServiceMonitor selector
-      selector:
-        {}
+      selector: {}
         # prometheus: kube-prometheus
 
       # -- Prometheus ServiceMonitor namespace
@@ -756,7 +750,7 @@ redis:
 # Check the redis-ha chart for more properties
 redis-ha:
   # -- Enables the Redis HA subchart and disables the custom Redis single node deployment
-  enabled: true
+  enabled: false
   exporter:
     # -- If `true`, the prometheus exporter sidecar is enabled
     enabled: true
@@ -791,9 +785,9 @@ server:
 
   autoscaling:
     # -- Enable Horizontal Pod Autoscaler ([HPA]) for the Argo CD server
-    enabled: true
+    enabled: false
     # -- Minimum number of replicas for the Argo CD server [HPA]
-    minReplicas: 2
+    minReplicas: 1
     # -- Maximum number of replicas for the Argo CD server [HPA]
     maxReplicas: 5
     # -- Average CPU utilization percentage for the Argo CD server [HPA]
@@ -939,7 +933,7 @@ server:
     # -- Server service labels
     labels: {}
     # -- Server service type
-    type: NodePort
+    type: ClusterIP
     # -- Server service http port for NodePort service type (only if `server.service.type` is set to "NodePort")
     nodePortHttp: 30080
     # -- Server service https port for NodePort service type (only if `server.service.type` is set to "NodePort")
@@ -988,12 +982,11 @@ server:
       # -- Prometheus [MetricRelabelConfigs] to apply to samples before ingestion
       metricRelabelings: []
       # -- Prometheus ServiceMonitor selector
-      selector:
-        {}
+      selector: {}
         # prometheus: kube-prometheus
 
       # -- Prometheus ServiceMonitor namespace
-      namespace: "" # monitoring
+      namespace: ""  # monitoring
       # -- Prometheus ServiceMonitor labels
       additionalLabels: {}
 
@@ -1182,7 +1175,7 @@ server:
   ## Ref: https://github.com/argoproj/argo-cd/blob/master/docs/operator-manual/rbac.md
   rbacConfig:
     {}
-    # policy.csv is an file containing user-defined RBAC policies and role definitions (optional).
+    # policy.csv is a file containing user-defined RBAC policies and role definitions (optional).
     # Policy rules are in the form:
     #   p, subject, resource, action, object, effect
     # Role definitions and bindings are in the form:
@@ -1308,7 +1301,7 @@ server:
     enabled: false
     # -- Domains for the Google Managed Certificate
     domains:
-      - argocd.example.com
+    - argocd.example.com
 
   ## Create a Google FrontendConfig Custom Resource, for use with the GKE Ingress Controller
   ## https://cloud.google.com/kubernetes-engine/docs/how-to/ingress-features#configuring_ingress_features_through_frontendconfig_parameters
@@ -1413,9 +1406,9 @@ repoServer:
 
   autoscaling:
     # -- Enable Horizontal Pod Autoscaler ([HPA]) for the repo server
-    enabled: true
+    enabled: false
     # -- Minimum number of replicas for the repo server [HPA]
-    minReplicas: 2
+    minReplicas: 1
     # -- Maximum number of replicas for the repo server [HPA]
     maxReplicas: 5
     # -- Average CPU utilization percentage for the repo server [HPA]
@@ -1566,8 +1559,7 @@ repoServer:
       # -- Prometheus [MetricRelabelConfigs] to apply to samples before ingestion
       metricRelabelings: []
       # -- Prometheus ServiceMonitor selector
-      selector:
-        {}
+      selector: {}
         # prometheus: kube-prometheus
 
       # -- Prometheus ServiceMonitor namespace
@@ -1660,8 +1652,7 @@ configs:
   ## Ref:
   ## - https://argoproj.github.io/argo-cd/operator-manual/declarative-setup/#clusters
   ## - https://argoproj.github.io/argo-cd/operator-manual/security/#external-cluster-credentials
-  clusterCredentials:
-    []
+  clusterCredentials: []
     # - name: mycluster
     #   server: https://mycluster.com
     #   labels: {}
@@ -1686,8 +1677,7 @@ configs:
   gpgKeysAnnotations: {}
   # -- [GnuPG](https://argoproj.github.io/argo-cd/user-guide/gpg-verification/) keys to add to the key ring
   # @default -- `{}` (See [values.yaml])
-  gpgKeys:
-    {}
+  gpgKeys: {}
     # 4AEE18F83AFDEB23: |
     #     -----BEGIN PGP PUBLIC KEY BLOCK-----
     #
@@ -1771,8 +1761,7 @@ configs:
 
   # -- Repository credentials to be used as Templates for other repos
   ## Creates a secret for each key/value specified below to create repository credentials
-  credentialTemplates:
-    {}
+  credentialTemplates: {}
     # github-enterprise-creds-1:
     #   url: https://github.com/argoproj
     #   githubAppID: 1
@@ -1796,8 +1785,7 @@ configs:
   # -- Repositories list to be used by applications
   ## Creates a secret for each key/value specified below to create repositories
   ## Note: the last example in the list would use a repository credential template, configured under "configs.repositoryCredentials".
-  repositories:
-    {}
+  repositories: {}
     # istio-helm-repo:
     #   url: https://storage.googleapis.com/istio-prerelease/daily-build/master-latest-daily/charts
     #   name: istio.io
