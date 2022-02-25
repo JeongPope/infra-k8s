@@ -14,7 +14,7 @@ Cluster node의 리소스 부족으로 파드의 Scheduling이 pending되면, ho
 * AWSCLI를 통한 확인 방법
 ```bash
 $ aws autoscaling describe-auto-scaling-groups \
-	--query "AutoScalingGroups[? Tags[? (Key=='eks:cluster-name') && Value=='changename']].[AutoScalingGroupName,MinSize,MaxSize,DesiredCapacity]" \
+	--query "AutoScalingGroups[? Tags[? (Key=='eks:cluster-name') && Value=='<changename>']].[AutoScalingGroupName,MinSize,MaxSize,DesiredCapacity]" \
 	--output table
 ```
 
@@ -44,7 +44,7 @@ command:
   - --cloud-provider=aws
   - --skip-nodes-with-local-storage=false
 	- --expander=least-waste
-	- --node-group-auto-discovery=asg:tag=k8s.io/cluster-autoscaler/enabled,k8s.io/cluster-autoscaler/**k8s-project-dev**
+	- --node-group-auto-discovery=asg:tag=k8s.io/cluster-autoscaler/enabled,k8s.io/cluster-autoscaler/**k8s-boilerplate-dev**
 ```
 
 ```bash

@@ -131,6 +131,8 @@ metadata:
   namespace: kube-system
   labels:
     app: cluster-autoscaler
+  # annotations:
+  #   cluster-autoscaler.kubernetes.io/safe-to-evict: "false"
 spec:
   replicas: 1
   selector:
