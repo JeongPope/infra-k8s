@@ -1,0 +1,45 @@
+apiVersion: elasticsearch.k8s.elastic.co/v1
+kind: Elasticsearch
+metadata:
+  name: eck-elasticsearch
+  namespace: monitoring
+spec:
+  version: 8.0.0
+  nodeSets:
+    - name: nodes
+      count: 3
+      config:
+        node.roles:
+          - master
+          - data
+      podTemplate:
+        spec:
+          initContainers:
+            - name: increase-vm-max-map
+              image: busybox
+              command: ["sysctl", "-w", "vm.max_map_count=262144"]
+              securityContext:
+                privileged: true
+          containers:
+            - name: elasticsearch
+              resources:
+                requests:
+                  memory: 1Gi
+                  cpu: 500m
+                limits:
+                  memory: 2Gi
+                  cpu: 1500m
+      volumeClaimTemplates:
+        - metadata:
+            name: elasticsearch-data
+          spec:
+            storageClassName: aws-ebs-gp2-retain
+            accessModes:
+              - ReadWriteOnce
+            resources:
+              requests:
+                storage: 50Gi
+  http:
+    tls:
+      selfSignedCertificate:
+        disabled: true
