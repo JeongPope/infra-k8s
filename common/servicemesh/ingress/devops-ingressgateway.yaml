@@ -10,11 +10,11 @@ metadata:
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/group.name: alb-02
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTP":80}, {"HTTPS":443}]'
-    alb.ingress.kubernetes.io/certificate-arn: "arn:aws:acm:ap-northeast-2:<aws_account_id>:certificate/<arn>"
+    alb.ingress.kubernetes.io/certificate-arn: "arn:aws:acm:ap-northeast-2:<aws_account_id>:certificate/<aws arn>" # need to change
     alb.ingress.kubernetes.io/ssl-redirect: "443"
 spec:
   rules:
-    - host: <elasticsearch host> # need to change
+    - host: <Domain> # need to change
       http:
         paths:
           - path: /
@@ -24,7 +24,7 @@ spec:
                 name: devops-ingressgateway
                 port:
                   number: 80
-    - host: <kibana host> # need to change
+    - host: <Domain> # need to change
       http:
         paths:
           - path: /

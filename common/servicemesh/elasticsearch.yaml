@@ -1,0 +1,35 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: elasticsearch-gateway
+  namespace: monitoring
+spec:
+  selector:
+    istio: devops-ingressgateway
+  servers:
+    - hosts:
+        - <your hosts> # need to change
+      port:
+        name: http
+        protocol: HTTP
+        number: 80
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: elasticsearch-virtualservice
+  namespace: monitoring
+spec:
+  hosts:
+    - <your hosts> # need to change
+  gateways:
+    - elasticsearch-gateway
+  http:
+    - match:
+        - uri:
+            prefix: /
+      route:
+        - destination:
+            host: eck-elasticsearch-es-http
+            port:
+              number: 9200
