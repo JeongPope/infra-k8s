@@ -75,6 +75,7 @@ config:
         Remove_key  container_hash
         Remove_key  docker_id
         Remove_key  pod_id
+        Remove_key  tag
 
   ## https://docs.fluentbit.io/manual/pipeline/outputs
   outputs: |
