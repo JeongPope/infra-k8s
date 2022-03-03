@@ -15,6 +15,14 @@ aggregator:
     minReplicas: 1
     maxReplicas: 3
 
+  resources:
+    requests:
+      cpu: 300m
+      memory: 256Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi
+
   extraEnvVars:
     - name: ELASTICSEARCH_HOST
       value: eck-elasticsearch-es-http.monitoring.svc
@@ -98,6 +106,7 @@ aggregator:
         reconnect_on_error true
         reload_on_failure true
         request_timeout 15s
+        flush_interval 10s
 
         <buffer>
           @type file
