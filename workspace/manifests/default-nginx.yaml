@@ -8,7 +8,8 @@ spec:
     app: nginx
     version: v1
   ports:
-    - port: 8080
+    - name: http-80
+      port: 8080
       targetPort: 80
 ---
 apiVersion: apps/v1

@@ -36,7 +36,8 @@ global:
   #   - git.myhostname
 
   # -- Additional labels to add to all resources
-  additionalLabels: {}
+  additionalLabels:
+    {}
     # app: argo-cd
 
   networkPolicy:
@@ -59,7 +60,8 @@ apiVersionOverrides:
 createAggregateRoles: false
 
 # -- Array of extra K8s manifests to deploy
-extraObjects: []
+extraObjects:
+  []
   # - apiVersion: secrets-store.csi.x-k8s.io/v1
   #   kind: SecretProviderClass
   #   metadata:
@@ -269,7 +271,8 @@ controller:
       # -- Prometheus [MetricRelabelConfigs] to apply to samples before ingestion
       metricRelabelings: []
       # -- Prometheus ServiceMonitor selector
-      selector: {}
+      selector:
+        {}
         # prometheus: kube-prometheus
 
       # -- Prometheus ServiceMonitor namespace
@@ -381,7 +384,8 @@ dex:
       # -- Prometheus [MetricRelabelConfigs] to apply to samples before ingestion
       metricRelabelings: []
       # -- Prometheus ServiceMonitor selector
-      selector: {}
+      selector:
+        {}
         # prometheus: kube-prometheus
 
       # -- Prometheus ServiceMonitor namespace
@@ -522,7 +526,7 @@ dex:
     #     - all
     # readOnlyRootFilesystem: true
 
-# -- Resource limits and requests for dex
+  # -- Resource limits and requests for dex
   resources: {}
   #  limits:
   #    cpu: 50m
@@ -696,7 +700,8 @@ redis:
     # -- Port to use for redis-exporter sidecar
     containerPort: 9121
     # -- Resource limits and requests for redis-exporter sidecar
-    resources: {}
+    resources:
+      {}
       # limits:
       #   cpu: 50m
       #   memory: 64Mi
@@ -726,7 +731,8 @@ redis:
       # -- Prometheus [MetricRelabelConfigs] to apply to samples before ingestion
       metricRelabelings: []
       # -- Prometheus ServiceMonitor selector
-      selector: {}
+      selector:
+        {}
         # prometheus: kube-prometheus
 
       # -- Prometheus ServiceMonitor namespace
@@ -982,11 +988,12 @@ server:
       # -- Prometheus [MetricRelabelConfigs] to apply to samples before ingestion
       metricRelabelings: []
       # -- Prometheus ServiceMonitor selector
-      selector: {}
+      selector:
+        {}
         # prometheus: kube-prometheus
 
       # -- Prometheus ServiceMonitor namespace
-      namespace: ""  # monitoring
+      namespace: "" # monitoring
       # -- Prometheus ServiceMonitor labels
       additionalLabels: {}
 
@@ -1301,7 +1308,7 @@ server:
     enabled: false
     # -- Domains for the Google Managed Certificate
     domains:
-    - argocd.example.com
+      - argocd.example.com
 
   ## Create a Google FrontendConfig Custom Resource, for use with the GKE Ingress Controller
   ## https://cloud.google.com/kubernetes-engine/docs/how-to/ingress-features#configuring_ingress_features_through_frontendconfig_parameters
@@ -1559,7 +1566,8 @@ repoServer:
       # -- Prometheus [MetricRelabelConfigs] to apply to samples before ingestion
       metricRelabelings: []
       # -- Prometheus ServiceMonitor selector
-      selector: {}
+      selector:
+        {}
         # prometheus: kube-prometheus
 
       # -- Prometheus ServiceMonitor namespace
@@ -1652,7 +1660,8 @@ configs:
   ## Ref:
   ## - https://argoproj.github.io/argo-cd/operator-manual/declarative-setup/#clusters
   ## - https://argoproj.github.io/argo-cd/operator-manual/security/#external-cluster-credentials
-  clusterCredentials: []
+  clusterCredentials:
+    []
     # - name: mycluster
     #   server: https://mycluster.com
     #   labels: {}
@@ -1677,7 +1686,8 @@ configs:
   gpgKeysAnnotations: {}
   # -- [GnuPG](https://argoproj.github.io/argo-cd/user-guide/gpg-verification/) keys to add to the key ring
   # @default -- `{}` (See [values.yaml])
-  gpgKeys: {}
+  gpgKeys:
+    {}
     # 4AEE18F83AFDEB23: |
     #     -----BEGIN PGP PUBLIC KEY BLOCK-----
     #
@@ -1761,7 +1771,8 @@ configs:
 
   # -- Repository credentials to be used as Templates for other repos
   ## Creates a secret for each key/value specified below to create repository credentials
-  credentialTemplates: {}
+  credentialTemplates:
+    {}
     # github-enterprise-creds-1:
     #   url: https://github.com/argoproj
     #   githubAppID: 1
@@ -1785,7 +1796,8 @@ configs:
   # -- Repositories list to be used by applications
   ## Creates a secret for each key/value specified below to create repositories
   ## Note: the last example in the list would use a repository credential template, configured under "configs.repositoryCredentials".
-  repositories: {}
+  repositories:
+    {}
     # istio-helm-repo:
     #   url: https://storage.googleapis.com/istio-prerelease/daily-build/master-latest-daily/charts
     #   name: istio.io
