@@ -31,7 +31,7 @@ aggregator:
     - name: ELASTICSEARCH_USER
       value: "elastic"
     - name: ELASTICSEARCH_PASSWORD
-      value: "changeme" # need to change
+      value: "<changeme>" # need to change
 
   configMapFiles:
     fluentd.conf: |

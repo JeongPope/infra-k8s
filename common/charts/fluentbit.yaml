@@ -6,7 +6,7 @@
 
 env:
   - name: FLUENTD_HOST
-    value: fluentd-aggregator.logging.svc
+    value: fluentd-aggregator.monitoring.svc
   - name: FLUENTD_PORT
     value: "24224"
 flush: 1
@@ -75,7 +75,11 @@ config:
         Remove_key  container_hash
         Remove_key  docker_id
         Remove_key  pod_id
-        Remove_key  tag
+
+    # [FILTER]
+    #     Name        record_modifier
+    #     Match       *.*
+    #     Remove_key  tag
 
   ## https://docs.fluentbit.io/manual/pipeline/outputs
   outputs: |
