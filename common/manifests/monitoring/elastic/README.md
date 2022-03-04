@@ -62,9 +62,11 @@ spec:
               requests:
                 storage: 50Gi
 
-  # TLS 를 disabled 한다.
   http:
-    tls:
+    service: # service type을 ALB를 사용을 위해 NodePort로 설정
+      spec:
+        type: NodePort
+    tls: # TLS 를 disabled 한다.
       selfSignedCertificate:
         disabled: true
 ```
@@ -94,9 +96,12 @@ spec:
             limits:
               memory: 2Gi
               cpu: 2
-  # TLS 를 disabled 한다.
+  
   http:
-    tls:
+    service: # service type을 ALB를 사용을 위해 NodePort로 설정
+      spec:
+        type: NodePort
+    tls: # TLS 를 disabled 한다.
       selfSignedCertificate:
         disabled: true
 ```

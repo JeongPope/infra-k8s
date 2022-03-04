@@ -20,6 +20,9 @@ spec:
               memory: 2Gi
               cpu: 2
   http:
+    service:
+      spec:
+        type: NodePort
     tls:
       selfSignedCertificate:
         disabled: true

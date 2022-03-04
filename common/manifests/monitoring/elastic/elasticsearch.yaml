@@ -40,6 +40,9 @@ spec:
               requests:
                 storage: 50Gi
   http:
+    service:
+      spec:
+        type: NodePort
     tls:
       selfSignedCertificate:
         disabled: true
