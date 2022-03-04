@@ -24,13 +24,3 @@ spec:
                 name: devops-ingressgateway
                 port:
                   number: 80
-    - host: <Domain> # need to change
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: devops-ingressgateway
-                port:
-                  number: 80
