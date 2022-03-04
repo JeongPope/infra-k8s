@@ -1,0 +1,72 @@
+fullnameOverride: prometheus-stack
+namespaceOverride: monitoring
+
+defaultRules:
+  create: false
+
+alertmanager:
+  enabled: true
+  service:
+    type: NodePort
+
+prometheus:
+  enabled: true
+  service:
+    type: NodePort
+  prometheusSpec:
+    replicas: 1
+    retention: 1d
+
+    # namespace에 `prometheus: enabled` 레이블이 있다면 serviceMonitor를 수집
+    serviceMonitorNamespaceSelector:
+      matchLabels:
+        prometheus: enabled
+
+    # xxxxSelector 에 대한 설정이 없으면 모든 xxxx가 적용
+    serviceMonitorSelectorNilUsesHelmValues: false
+    podMonitorSelectorNilUsesHelmValues: false
+    ruleSelectorNilUsesHelmValues: false
+
+    storageSpec:
+      volumeClaimTemplate:
+        spec:
+          storageClassName: aws-ebs-gp2-retain
+          accessModes: ["ReadWriteOnce"]
+          resources:
+            requests:
+              storage: 50Gi
+
+grafana: # Subchart
+  enabled: true
+  service:
+    type: NodePort
+
+kubeStateMetrics: # Subchart
+  enabled: true # Deploy kube-state-metrics
+kube-state-metrics: # Configuration
+  enabled: true
+
+nodeExporter: # Subchart
+  enabled: true # Deploy kube-state-metrics
+prometheus-node-exporter: # Configuration
+  enabled: true
+
+prometheusOperator:
+  enabled: false
+
+kubeApiServer:
+  enabled: false
+kubelet:
+  enabled: false
+kubeControllerManager:
+  enabled: false
+coreDns:
+  enabled: false
+kubeDns:
+  enabled: false
+kubeEtcd:
+  enabled: false
+kubeScheduler:
+  enabled: false
+kubeProxy:
+  enabled: false

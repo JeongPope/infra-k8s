@@ -1,0 +1,51 @@
+fullnameOverride: prometheus-stack
+namespaceOverride: monitoring
+
+defaultRules:
+  create: false
+
+prometheusOperator:
+  enabled: true
+  # resources:
+  #   requests:
+  #     cpu:
+  #     memory:
+  #   limits:
+  #     cpu:
+  #     memory:
+  serviceMonitor:
+    selfMonitor: false
+  createCustomResource: true
+  cleanupCustomResource: true
+  cleanupCustomResourceBeforeInstall: true
+
+prometheus:
+  enabled: false
+kubeStateMetrics:
+  enabled: false
+kube-state-metrics:
+  enabled: false
+nodeExporter:
+  enabled: false
+prometheus-node-exporter:
+  enabled: false
+grafana:
+  enabled: false
+alertmanager:
+  enabled: false
+kubeApiServer:
+  enabled: false
+kubelet:
+  enabled: false
+kubeControllerManager:
+  enabled: false
+coreDns:
+  enabled: false
+kubeDns:
+  enabled: false
+kubeEtcd:
+  enabled: false
+kubeScheduler:
+  enabled: false
+kubeProxy:
+  enabled: false
