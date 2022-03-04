@@ -16,8 +16,7 @@ spec:
       holdApplicationUntilProxyStarts: true
   components:
     ingressGateways:
-      # 일반적인 트래픽을 받기 위한 ingress gateway
-      - name: istio-ingressgateway
+      - name: istio-ingressgateway # Default ingress gateway
         enabled: true
         k8s:
           # HA를 보장하고, PDB로 인해 upgrade version 실패 방지
