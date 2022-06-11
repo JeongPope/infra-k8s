@@ -1,0 +1,55 @@
+apiVersion: elasticsearch.k8s.elastic.co/v1
+kind: Elasticsearch
+metadata:
+  name: eck-elasticsearch
+  namespace: elastic
+spec:
+  version: 7.17.0
+  nodeSets:
+    - name: nodes
+      count: 3
+      config:
+        node.roles:
+          - master
+          - data
+        xpack.security.authc.api_key.enabled: true # API Key enabled
+      podTemplate:
+        spec:
+          initContainers:
+            - name: sysctl
+              command: ["sysctl", "-w", "vm.max_map_count=262144"]
+              securityContext:
+                privileged: true
+          containers:
+            - name: elasticsearch
+              env:
+                - name: ES_JAVA_OPTS
+                  value: -Xms1000m -Xmx1000m
+              resources:
+                requests:
+                  memory: 1Gi
+                  cpu: 1
+                limits:
+                  memory: 2Gi
+                  cpu: 2
+          securityContext:
+            fsGroup: 2000
+            runAsUser: 1000
+
+      volumeClaimTemplates:
+        - metadata:
+            name: elasticsearch-data
+          spec:
+            storageClassName: nfsprov
+            accessModes:
+              - ReadWriteOnce
+            resources:
+              requests:
+                storage: 100Gi
+  http:
+    service:
+      spec:
+        type: LoadBalancer
+    tls:
+      selfSignedCertificate:
+        disabled: true

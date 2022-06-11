@@ -1,0 +1,42 @@
+# default operator
+apiVersion: install.istio.io/v1alpha1
+kind: IstioOperator
+metadata:
+  name: istio-controlplane
+  namespace: istio-system
+spec:
+  profile: default
+  meshConfig:
+    # Datadog, Jaeger를 통해 분산 트레이싱을 가능하게 함
+    enableTracing: true
+    # Envoy proxy의 access log를 콘솔로 남긴다.
+    accessLogFile: "/dev/stdout"
+    # istio-proxy가 완전히 올라온 이후 서비스 실행
+    defaultConfig:
+      holdApplicationUntilProxyStarts: true
+  components:
+    ingressGateways:
+      - name: istio-ingressgateway # Default ingress gateway
+        enabled: true
+        k8s:
+          # HA를 보장하고, PDB로 인해 upgrade version 실패 방지
+          hpaSpec:
+            minReplicas: 2
+          resources:
+            limits:
+              cpu: 500m
+              memory: 512Mi
+            requests:
+              cpu: 250m
+              memory: 256Mi
+          service:
+            # ingress gateway의 Nodeport를 사용
+            type: NodePort
+          serviceAnnotations:
+            # ALB Health check 정보를 제공
+            alb.ingress.kubernetes.io/healthcheck-protocol: HTTP
+            alb.ingress.kubernetes.io/healthcheck-path: /healthz/ready
+            # How to get nodeport
+            # kubectl get service istio-ingressgateway -n istio-system \
+            #   -o jsonpath='{.spec.ports[?(@.name=="status-port")].nodePort}'
+            alb.ingress.kubernetes.io/healthcheck-port: "<Healthcheck Port>" # need to change
