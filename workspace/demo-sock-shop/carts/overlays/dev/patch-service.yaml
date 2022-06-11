@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: carts
+  namespace: sock-shop
+spec:
+  ports:
+    - name: http-carts
+      port: 80
+      targetPort: 80

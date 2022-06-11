@@ -1,0 +1,22 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - ../../base
+
+namespace: workspace
+
+images:
+  - name: queue-master
+    newName: weaveworksdemos/queue-master
+    newTag: 0.3.1
+
+patches:
+  - path: patch-service.yaml
+    target:
+      version: v1
+      kind: Service
+      name: queue-master
+
+patchesStrategicMerge:
+  - patch-deployment.yaml

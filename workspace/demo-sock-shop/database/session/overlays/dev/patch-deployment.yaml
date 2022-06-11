@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: session-db
+  namespace: sock-shop
+spec:
+  template:
+    metadata:
+      annotations:
+        # Istio sidecar proxy .resources.requests
+        sidecar.istio.io/proxyCPU: "100m"
+        sidecar.istio.io/proxyMemory: "128Mi"
+
+        # Istio sidecar proxy .resources.limits
+        sidecar.istio.io/proxyCPULimit: "200m"
+        sidecar.istio.io/proxyMemoryLimit: "256Mi"
+    spec:
+      nodeSelector:
+        kubernetes.io/os: linux
+        $patch: replace

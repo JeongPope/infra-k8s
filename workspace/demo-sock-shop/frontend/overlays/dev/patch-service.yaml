@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: front-end
+  namespace: sock-shop
+spec:
+  type: ClusterIP
+  ports:
+    - port: 80
+      $patch: delete
+    - name: http-frontend
+      port: 8080
+      targetPort: 8079

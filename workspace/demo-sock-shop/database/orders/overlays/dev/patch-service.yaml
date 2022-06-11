@@ -1,0 +1,12 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: orders-db
+  namespace: sock-shop
+spec:
+  ports:
+    # the port that this service should serve on
+    - name: tcp-orders-db
+      port: 27017
+      targetPort: 27017
