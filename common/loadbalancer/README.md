@@ -1,5 +1,7 @@
-## AWS LoadBalancer Controller
-### 1. IAM Policy
+# LoadBalancer
+
+### AWS LoadBalancer Controller
+1. IAM Policy
 ```bash
 $ curl -o iam-policy.json https://raw.githubusercontent.com/kubernetes-sigs/aws-load-balancer-controller/v2.3.1/docs/install/iam_policy.json
 ```
@@ -7,7 +9,7 @@ $ curl -o iam-policy.json https://raw.githubusercontent.com/kubernetes-sigs/aws-
 * [Terraform : IAM Policy](https://github.com/JeongPope/infra-terraform/blob/master/workspace/3-iam/policy/worker-alb.json)
 <br>
 
-### 2. Cert Manager
+2. Cert Manager
 ```bash
 $ kubectl apply --validate=false -f https://github.com/jetstack/cert-manager/releases/download/v1.7.1/cert-manager.yaml
 
@@ -16,8 +18,8 @@ $ kubectl apply -f cert-manager.yaml
 ```
 <br>
 
-### 3. AWS ALB Controller
-#### 1) Deployment spec에서 `--cluster-name` 을 수정해야합니다.
+3. AWS ALB Controller
+##### 1) Deployment spec에서 `--cluster-name` 을 수정해야합니다.
 ```yaml
 apiVersion: apps/v1
 kind: Deployment
@@ -32,13 +34,13 @@ spec:
                 - args:
                     - --cluster-name=<INSERT_CLUSTER_NAME>
 ```
-#### 2) 리소스 생성
+##### 2) 리소스 생성
 ```bash
 $ kubectl apply -f aws-alb-controller.yaml
 ```
 <br>
 
-### 4. Create LoadBalancer
+4. Create LoadBalancer
 ```bash
 // 생성된 ALB 확인 방법
 $ kubectl get ingress aws-alb-ingress -n istio-system -o jsonpath="{.status.loadBalancer.ingress[*].hostname}"
@@ -56,7 +58,38 @@ $ kubectl get ingress aws-alb-ingress -n istio-system -o jsonpath="{.status.load
 
 ---
 
-## Nginx ingress controller (for AWS)
-### Docs
+### Nginx ingress controller (for AWS)
+#### Reference
 * [Official](https://kubernetes.github.io/ingress-nginx/)
 * [무중단 업데이트](https://www.letmecompile.com/kubernetes-nlb-nginx-ingress-update/)
+
+---
+
+### MetalLB
+* On-Premise k8s 환경에서 외부 L4 switch 없이 로드밸런싱 기능 제공
+* MetalLB Pod가 Restart되면 서비스에는 영향 없으나, ARP를 할당하는 노드가 down되면 10초 내외 down 발생할 수 있다.
+
+1. Install
+```bash
+$ kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.12.1/manifests/namespace.yaml
+$ kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.12.1/manifests/metallb.yaml
+```
+
+2. IP Pool (layer2)
+```yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: metallb-system
+  name: config
+data:
+  config: |
+    address-pools:
+    - name: default
+      protocol: layer2
+      addresses:
+      - 10.100.11.10-10.100.11.210 # IP Range
+```
+
+#### Reference
+* https://metallb.universe.tf/installation/

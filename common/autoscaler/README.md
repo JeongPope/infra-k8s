@@ -1,6 +1,6 @@
-## Autoscaler
+# Autoscaler
 
-#### Autoscaler
+### Autoscaler
 Cluster node의 리소스 부족으로 파드의 Scheduling이 pending되면, horizontal scaling을 한다.
 
 1. nodegroup asg의 maxsize를 적절히 수정한다

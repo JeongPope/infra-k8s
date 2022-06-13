@@ -9,5 +9,5 @@ $ kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/la
 * OnPremise : metricserver-kubelet-insecure.yaml
 * AWS : metricserver.yaml
 
-### 차이점
-`metric-server` 의 args flag에 `--kubelet-insecure-tls=true` 옵션 유무
+### Need to check
+* `metric-server` 의 args flag에 `--kubelet-insecure-tls=true` 옵션 유무
