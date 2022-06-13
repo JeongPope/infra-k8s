@@ -27,11 +27,11 @@ spec:
                   value: -Xms1000m -Xmx1000m
               resources:
                 requests:
-                  memory: 1Gi
                   cpu: 1
+                  memory: 1Gi
                 limits:
-                  memory: 2Gi
                   cpu: 2
+                  memory: 2Gi
           securityContext:
             fsGroup: 2000
             runAsUser: 1000

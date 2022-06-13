@@ -2,9 +2,9 @@ apiVersion: elasticsearch.k8s.elastic.co/v1
 kind: Elasticsearch
 metadata:
   name: eck-elasticsearch
-  namespace: monitoring
+  namespace: elastic
 spec:
-  version: 8.0.0
+  version: 8.2.0
   nodeSets:
     - name: nodes
       count: 3
@@ -12,6 +12,7 @@ spec:
         node.roles:
           - master
           - data
+        xpack.security.authc.api_key.enabled: true
       podTemplate:
         spec:
           initContainers:
@@ -24,16 +25,16 @@ spec:
             - name: elasticsearch
               resources:
                 requests:
-                  memory: 1Gi
                   cpu: 500m
+                  memory: 1Gi
                 limits:
+                  cpu: 1000m
                   memory: 2Gi
-                  cpu: 1500m
       volumeClaimTemplates:
         - metadata:
             name: elasticsearch-data
           spec:
-            storageClassName: aws-ebs-gp2-retain
+            storageClassName: gp2
             accessModes:
               - ReadWriteOnce
             resources:
