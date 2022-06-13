@@ -1,0 +1,31 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: entrypoint
+  namespace: istio-system
+  labels:
+    name: entrypoint
+    istio: ingressgateway
+  annotations:
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/group.name: workspace
+    # AWS ACM ARN
+    alb.ingress.kubernetes.io/certificate-arn: "arn:aws:acm:ap-northeast-2:<account id>:certificate/<uid>"
+    # 80, 443 포트에 대한 리스너 생성
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
+    # 모든 HTTP 리스너는 default action으로 HTTPS로 redirect되며, 다른 규칙을 무시한다.
+    alb.ingress.kubernetes.io/ssl-redirect: "443"
+    alb.ingress.kubernetes.io/success-codes: 200,302
+spec:
+  ingressClassName: alb
+  rules:
+    - host: "*" # need to change
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: istio-ingressgateway
+                port:
+                  number: 80

@@ -1,0 +1,19 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: entrypoint-virtualservice
+  namespace: workspace
+spec:
+  gateways:
+    - entrypoint-gateway
+  hosts:
+    - "*" # need to change
+  http:
+    - match:
+        - uri:
+            prefix: /
+      route:
+        - destination:
+            host: front-end
+            port:
+              number: 8080
