@@ -1,5 +1,6 @@
 # infra-k8s
 쿠버네티스 환경에서 활용 가능한 `Boilerplate`를 구성하는데 목적이 있습니다.
+여기에서는 아래 예제를 활용하여 MSA를 생성합니다.
 
 ### Demo MSA (Reference)
 * [Demo MSA - Sock Shop](https://github.com/microservices-demo/microservices-demo)
