@@ -1,0 +1,27 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: kibana-ingress
+  namespace: elastic
+  labels:
+    name: kibana-ingress
+  annotations:
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/group.name: devops
+    alb.ingress.kubernetes.io/certificate-arn: "arn:aws:acm:ap-northeast-2:<account id>:certificate/<uid>" # need to change
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP":80}, {"HTTPS":443}]'
+    alb.ingress.kubernetes.io/ssl-redirect: "443"
+    alb.ingress.kubernetes.io/success-codes: 200,302
+spec:
+  ingressClassName: alb
+  rules:
+    - host: "*" # need to change
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: eck-kibana-kb-http
+                port:
+                  number: 5601
